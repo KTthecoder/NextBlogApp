@@ -1,0 +1,80 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserStatus {
+  ADMIN
+  NORMAL
+}
+
+model User {
+  id         String       @unique @default(uuid())
+  username   String       @unique
+  email      String       @unique
+  password   String
+  image      String?
+  status     UserStatus
+  createdAt  DateTime     @default(now())
+  Article    Article[]
+  Comment    Comment[]
+  SubComment SubComment[]
+}
+
+model ArticleCategory {
+  id      Int       @unique @default(autoincrement())
+  name    String    @unique
+  icon    String
+  color   String
+  slug    String    @unique
+  Article Article[]
+}
+
+model Article {
+  id                String          @unique @default(uuid())
+  title             String
+  createdAt         DateTime        @default(now())
+  banner            String?
+  likes             Int             @default(0)
+  disslikes         Int             @default(0)
+  shortDesc         String
+  body              String
+  slug              String          @unique
+  category          ArticleCategory @relation(fields: [articleCategoryId], references: [id])
+  user              User            @relation(fields: [userId], references: [id])
+  userId            String
+  articleCategoryId Int
+  Comment           Comment[]
+}
+
+model Comment {
+  id         Int          @unique @default(autoincrement())
+  createdAt  DateTime     @default(now())
+  body       String
+  likes      Int          @default(0)
+  disslikes  Int          @default(0)
+  article    Article      @relation(fields: [articleId], references: [id])
+  articleId  String
+  user       User         @relation(fields: [userId], references: [id])
+  userId     String
+  SubComment SubComment[]
+}
+
+model SubComment {
+  id        Int      @unique @default(autoincrement())
+  createdAt DateTime @default(now())
+  body      String
+  likes     Int      @default(0)
+  disslikes Int      @default(0)
+  comment   Comment  @relation(fields: [commentId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  commentId Int
+}

@@ -1,9 +1,9 @@
 import Link from "next/link"
 
 type Props = {
-    link: String,
-    title: String,
-    color: 'blue' | 'red'
+  link: String,
+  title: String,
+  color: 'blue' | 'red'
 }
 
 export default function MainButton({ link, title, color }: Props) {

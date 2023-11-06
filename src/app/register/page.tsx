@@ -1,4 +1,10 @@
 import Link from "next/link"
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Register | NextBlog',
+  description: 'Varius morbi enim nunc faucibus a pellentesque. Quis varius quam quisque id diam.'
+}
 
 const page = () => {
     return (

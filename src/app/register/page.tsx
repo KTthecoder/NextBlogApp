@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 const page = () => {
     return (
       <div className="flex w-screen flex-col items-center justify-center">
-        <div className="flex flex-col items-center justify-center mt-10 sm:mt-20 lg:mt-28">
+        <div className="flex flex-col items-center justify-center mt-16 sm:mt-18 xl:mt-20">
           <h2 className="text-white text-2xl tracking-wider border-b-[rgb(45,45,45)] border-b-2 w-72 text-center pb-4 sm:w-96">Create account</h2>
           <form className="flex flex-col mt-7">
             <label className="text-gray-100 pb-2 tracking-wide font-medium">Email address</label>

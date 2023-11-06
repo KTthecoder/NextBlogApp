@@ -21,7 +21,9 @@ export default function RootLayout({
         <nav>
           <Navbar/>
         </nav>
-        {children}
+        <main className='mt-10 sm:mt-20 lg:mt-28'>
+          {children}
+        </main>
       </body>
     </html>
   )

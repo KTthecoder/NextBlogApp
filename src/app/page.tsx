@@ -10,18 +10,22 @@ export async function generateMetadata() {
 
 export default function Home() {
   return (
-    <div className="flex flex-col lg:flex-row justify-center mt-10 sm:mt-16 items-center w-full">
+    <div className="flex flex-col justify-center mt-10 sm:mt-16 items-center w-full">
+      <h1 className="text-white text-4xl mb-10 w-11/12 tracking-wider" style={{maxWidth: 1600}}>List of all articles</h1>
       <div className="grid grid-flow-row grid-cols-1 w-11/12 gap-10 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 2xl:gap-14" style={{maxWidth: 1600}}>
-        <ArticleBlock title='First blog post' commentsCount={11} likesCount={21} banner={'red'} 
+        <ArticleBlock title='First blog post' commentsCount={11} likesCount={21} banner={'red'} slug={'/first-blog-post'}
         shortDesc='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et aliqua...' 
         category='Quick News' categoryColor={'red'} createdAt={new Date()} user={{name: 'Ksawery', image: ''}}/>
-        <ArticleBlock title='Second blog post' commentsCount={10} likesCount={14} banner={'red'} 
+        <ArticleBlock title='Second blog post' commentsCount={10} likesCount={14} banner={'red'} slug={'/second-blog-post'}
         shortDesc='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et aliqua...' 
         category='Quick News' categoryColor={'red'} createdAt={new Date()} user={{name: 'Ksawery', image: ''}}/>
-        <ArticleBlock title='Third blog post' commentsCount={2} likesCount={5} banner={'red'} 
+        <ArticleBlock title='Third blog post' commentsCount={2} likesCount={5} banner={'red'} slug={'/third-blog-post'}
         shortDesc='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et aliqua...' 
         category='Quick News' categoryColor={'red'} createdAt={new Date()} user={{name: 'Ksawery', image: ''}}/>
-        <ArticleBlock title='Fourth blog post' commentsCount={11} likesCount={21} banner={'red'} 
+        <ArticleBlock title='Fourth blog post' commentsCount={11} likesCount={21} banner={'red'} slug={'/fourth-blog-post'}
+        shortDesc='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et aliqua...' 
+        category='Quick News' categoryColor={'red'} createdAt={new Date()} user={{name: 'Ksawery', image: ''}}/>
+        <ArticleBlock title='Fourth blog post' commentsCount={11} likesCount={21} banner={'red'} slug={'/fourth-blog-post'}
         shortDesc='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et aliqua...' 
         category='Quick News' categoryColor={'red'} createdAt={new Date()} user={{name: 'Ksawery', image: ''}}/>
       </div>

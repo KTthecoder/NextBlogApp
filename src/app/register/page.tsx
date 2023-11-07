@@ -23,7 +23,7 @@ const page = () => {
             <button type="submit" className="bg-blue-500 w-72 sm:w-96 py-3 text-lg text-white mt-8 rounded-md tracking-wide">Create account</button>
           </form>
           <Link href='/sign-in' className="bg-green-500 w-72 sm:w-96 py-3 text-lg text-center
-            text-white mt-6 rounded-md tracking-wide hover:bg-green-700 transition-all duration-500 ease-in-out">Sign In</Link>
+          text-white mt-6 rounded-md tracking-wide hover:bg-green-700 transition-all duration-500 ease-in-out">Sign In</Link>
         </div>
       </div>
     )

@@ -1,6 +1,3 @@
-import Link from "next/link";
-import MainButton from "./MainButton";
-
 export default function Footer() {
   return (
     <div style={{backgroundColor: '#151515', height: 100, marginTop: 100}} className='top-0 flex items-center justify-center w-full'>

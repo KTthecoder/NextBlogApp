@@ -6,6 +6,7 @@ import { FormEvent } from "react";
 
 const SignInForm = () => {
   const router = useRouter()
+
   const handleSubmit = async (e:FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
@@ -17,8 +18,7 @@ const SignInForm = () => {
   
     if(!signInData?.ok){
       console.log('error occured')
-    }
-    else{
+    } else {
       router.refresh()
       router.push('/admin')
     }

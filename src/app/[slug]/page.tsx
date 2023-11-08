@@ -3,6 +3,8 @@ import { AiOutlineLike, AiOutlineCalendar } from 'react-icons/ai'
 import { FaRegComments } from 'react-icons/fa'
 import userImg from '../../static/user.jpg'
 import prisma from "@/lib/db"
+import Image from "next/image"
+import { notFound } from "next/navigation"
 
 type Props = {
     params: {
@@ -41,6 +43,10 @@ const page = async ({params}:Props) => {
         createdAt: true,
         body: true,
     }})
+
+    if(!article){
+        notFound()
+    }
     
     return (
         <div className="flex w-full flex-col items-center justify-center mt-16 sm:-mt-4 lg:-mt-12">
@@ -66,7 +72,7 @@ const page = async ({params}:Props) => {
                 </div>
             </div>
             <div className="w-11/12 mt-7 sm:mt-10" style={{maxWidth: 950}}>
-                <img src={userImg.src} alt='cover' className='w-full rounded-md shadow-sm shadow-gray-800'/>
+                <Image width={950} height={950} src={userImg.src} alt='cover' className='w-full rounded-md shadow-sm shadow-gray-800'/>
                 <div className="flex flex-col w-full">
                     {/* {article?.body} */}
                     <h2 className="font-medium text-white text-xl mt-6 tracking-wide leading-8 sm:text-2xl sm:leading-10">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</h2>

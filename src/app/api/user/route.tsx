@@ -1,6 +1,7 @@
 import prisma from "@/lib/db";
 import { NextResponse } from "next/server";
 import { hash } from 'bcrypt'
+import { getServerSession } from "next-auth";
 
 export async function POST(req:Request){
     try{
@@ -30,5 +31,4 @@ export async function POST(req:Request){
     catch (error){
         return NextResponse.json({message: 'Something went wrong'}, {status: 500})
     }
-    
 }

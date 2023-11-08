@@ -33,7 +33,7 @@ export default async function Home() {
         image: true,
       }
     },
-  }})
+  }, orderBy: {createdAt: "desc"}})
 
   return (
     <div className="flex flex-col justify-center mt-10 sm:mt-16 items-center w-full">

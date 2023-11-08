@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { authOptions } from '@/lib/auth'
 import { getServerSession } from "next-auth"
 import MainButton from './MainButton'
+import Image from 'next/image'
+import prisma from '@/lib/db'
 import BtnAction from './BtnAction'
 
 type Props = {
@@ -28,7 +30,7 @@ const ArticleBlock = async ({ title, commentsCount, likesCount, shortDesc, categ
     return (
         <div  className='flex flex-col w-full'>
             <Link href={`${slug.toString()}`}>
-                <img src={userImg.src} alt='user' className='w-full h-[300px] sm:h-[250px] rounded-md shadow-sm shadow-gray-800'/>
+                <Image width={300} height={300} src={userImg.src} alt='user' className='w-full h-[300px] sm:h-[250px] rounded-md shadow-sm shadow-gray-800'/>
                 <div className='flex flex-row justify-between items-center mt-4 flex-wrap'>
                     <p style={{backgroundColor: categoryColor.toString()}} className='text-white rounded-lg px-2 py-1 text-sm'>{category}</p>
                     <div className='flex flex-row justify-start'>
@@ -41,7 +43,7 @@ const ArticleBlock = async ({ title, commentsCount, likesCount, shortDesc, categ
                 {type === 'admin'
                 ? null
                 : <div className='flex flex-row items-center mt-3 w-full'>
-                    <img src={userImg.src} alt='user' className='w-10 h-10 rounded-full justify-center'/>
+                    <Image width={40} height={40} src={userImg.src} alt='user' className='w-10 h-10 rounded-full justify-center'/>
                     <div className='flex flex-col ml-3 justify-center'>
                         <p className='text-white tracking-wide'>{user.name}</p>
                         <p className='text-gray-300 tracking-wide text-sm'>NextBlog | Admin</p>
@@ -52,9 +54,9 @@ const ArticleBlock = async ({ title, commentsCount, likesCount, shortDesc, categ
             </Link>
             {type === 'admin'
             ? <div className='mt-6 flex items-center justify-start'>
-                <MainButton link={'/edit-article'} title='Edit' color='blue'/>
+                <MainButton link={'/admin/edit-article'} title='Edit' color='blue'/>
                 <span className='mr-5'></span>
-                <BtnAction title='Delete'/>
+                <BtnAction title='Delete' articleSlug={slug.toString()}/>
             </div>
             : null}
         </div>

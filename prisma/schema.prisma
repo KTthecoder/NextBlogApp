@@ -48,6 +48,7 @@ model Article {
   user              User            @relation(fields: [userId], references: [id])
   userId            String
   articleCategoryId Int
+  // banner            String
   Comment           Comment[]
 }
 

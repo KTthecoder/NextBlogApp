@@ -11,7 +11,6 @@ type Props = {
     title: String,
     commentsCount: Number,
     likesCount: Number,
-    banner: String,
     shortDesc: String,
     category: String,
     categoryColor: String,
@@ -24,7 +23,7 @@ type Props = {
     }
 }
 
-const ArticleBlock = async ({ title, commentsCount, likesCount, banner, shortDesc, categoryColor, category, createdAt, slug, type, user }: Props) => {
+const ArticleBlock = async ({ title, commentsCount, likesCount, shortDesc, categoryColor, category, createdAt, slug, type, user }: Props) => {
 
     return (
         <div  className='flex flex-col w-full'>

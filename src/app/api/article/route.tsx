@@ -17,8 +17,6 @@ export async function POST(req:Request){
         const { articleData, categoryData } = await req.json()
         const article:ArticleType = articleData
         const categorySlug:CategoryData = categoryData
-        console.log(articleData)
-        console.log(categoryData)
     
         const category = await prisma.articleCategory.findUnique({where: {
             slug: categorySlug.slug.toString()
@@ -37,11 +35,34 @@ export async function POST(req:Request){
         await prisma.article.create({data: {
             title: article.title, shortDesc: article.shortDesc,
             body: article.body, slug: article.slug, 
-            category: {connect: {slug: category.slug}}, 
+            category: {connect: {slug: category.slug}},
             user: {connect: {id: '36408a44-bda7-40b3-863f-9835470dbec8'}}
         }})
 
         return NextResponse.json({message: 'Article created successfully'}, {status: 201})
+    }
+    catch (error){
+        return NextResponse.json({message: 'Error while making API request'}, {status: 500})
+    }
+}
+
+export async function DELETE(req:Request){
+    try{
+        const { slug } = await req.json()
+        
+        const article = await prisma.article.findUnique({where: {
+            slug: slug
+        }})
+
+        if(article === null){
+            return NextResponse.json({message: 'Article with that slug does not exists'})
+        }
+
+        await prisma.article.delete({where: {
+            slug: slug
+        }})
+
+        return NextResponse.json({message: 'Article deleted successfully'}, {status: 200})
     }
     catch (error){
         return NextResponse.json({message: 'Error while making API request'}, {status: 500})

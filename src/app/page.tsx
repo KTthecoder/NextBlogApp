@@ -1,6 +1,5 @@
 import ArticleBlock from "@/components/ArticleBlock";
 import prisma from "@/lib/db";
-import { Metadata } from "next";
 
 export async function generateMetadata() {
   return {
@@ -10,11 +9,15 @@ export async function generateMetadata() {
 }
 
 export default async function Home() {
+
   const articles = await prisma.article.findMany({select: {
     title: true,
-    Comment: true,
+    Comment: {
+      select: {
+        _count: true
+      }
+    },
     likes: true,
-    banner: true,
     slug: true,
     shortDesc: true,
     category: {
@@ -29,32 +32,18 @@ export default async function Home() {
         username: true,
         image: true,
       }
-    }
+    },
   }})
 
   return (
     <div className="flex flex-col justify-center mt-10 sm:mt-16 items-center w-full">
       <h1 className="text-white tracking-wider font-medium text-4xl mb-10 w-11/12" style={{maxWidth: 1600}}>List of all articles</h1>
       <div className="grid grid-flow-row grid-cols-1 w-11/12 gap-10 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 2xl:gap-14" style={{maxWidth: 1600}}>
-        {articles.map((item) => (
-          <ArticleBlock title={item.title} commentsCount={11} likesCount={item.likes} banner={'red'} slug={item.slug} type='normal'
-          shortDesc={item.shortDesc}
-          category={item.category.name} categoryColor={item.category.name} createdAt={item.createdAt} user={{name: item.user.username, image: ''}}/>
-        ))}
-       
-        {/* <ArticleBlock title='Second blog post' commentsCount={10} likesCount={14} banner={'red'} slug={'/second-blog-post'} type='normal'
-        shortDesc='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et aliqua...' 
-        category='Quick News' categoryColor={'red'} createdAt={new Date()} user={{name: 'Ksawery', image: ''}}/>
-        <ArticleBlock title='Third blog post' commentsCount={2} likesCount={5} banner={'red'} slug={'/third-blog-post'} type='normal'
-        shortDesc='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et aliqua...' 
-        category='Quick News' categoryColor={'red'} createdAt={new Date()} user={{name: 'Ksawery', image: ''}}/>
-        <ArticleBlock title='Fourth blog post' commentsCount={11} likesCount={21} banner={'red'} slug={'/fourth-blog-post'} type='normal'
-        shortDesc='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et aliqua...' 
-        category='Quick News' categoryColor={'red'} createdAt={new Date()} user={{name: 'Ksawery', image: ''}}/>
-        <ArticleBlock title='Fourth blog post' commentsCount={11} likesCount={21} banner={'red'} slug={'/fourth-blog-post'} type='normal'
-        shortDesc='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et aliqua...' 
-        category='Quick News' categoryColor={'red'} createdAt={new Date()} user={{name: 'Ksawery', image: ''}}/> */}
-      
+        {articles.map((item, key) => (
+          <ArticleBlock key={key} title={item.title} commentsCount={item.Comment.length} likesCount={item.likes} slug={item.slug} type='normal'
+          shortDesc={item.shortDesc} category={item.category.name} categoryColor={item.category.color} createdAt={item.createdAt} 
+          user={{name: item.user.username, image: ''}}/>
+        ))}   
       </div>
     </div>
     

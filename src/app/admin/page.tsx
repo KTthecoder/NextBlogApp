@@ -4,6 +4,7 @@ import { authOptions } from "@/lib/auth"
 import DashboardUser from '@/components/DashboardUser'
 import ArticleBlock from '@/components/ArticleBlock'
 import BtnAction from '@/components/BtnAction'
+import prisma from '@/lib/db'
 
 export const metadata: Metadata = {
     title: 'Admin | NextBlog',
@@ -12,7 +13,34 @@ export const metadata: Metadata = {
 
 const page = async () => {
     const session = await getServerSession(authOptions)
-    console.log(session)
+    const articles = await prisma.article.findMany({where: {
+        userId: session?.user.id
+    }, select: {
+        title: true,
+        Comment: {
+            select: {
+                _count: true
+            }
+        },
+        likes: true,
+        slug: true,
+        shortDesc: true,
+        category: {
+            select: {
+                color: true,
+                name: true,
+            }
+        },
+        createdAt: true,
+        user: {
+            select: {
+                username: true,
+                image: true,
+            }
+        }
+    }})
+
+    console.log(articles)
 
     if(session?.user){
         return (
@@ -20,14 +48,7 @@ const page = async () => {
                 <div className='flex flex-col w-11/12' style={{maxWidth: 1600}}>
                     <h1 className='text-white tracking-wider font-medium text-4xl my-7'>Dashboard</h1>
                     <div className='flex flex-row'>
-                        <DashboardUser/>
-                        {/* <div className='flex flex-col items-center mt-3 justify-center py-5 sm:flex-row sm:w-[220px] sm:py-6'>
-                            <button className='bg-blue-500 rounded-md px-6 py-2 mt-3 tracking-wide text-base box-border sm:mt-0
-                            transition-all duration-500 shadow-sm hover:rounded-xl text-white'>Create article</button>
-                        </div>
-                        <div className='flex flex-col items-center mt-3 justify-center py-5 sm:flex-row sm:w-[220px] sm:py-6'>
-                            <BtnAction title='Logout'/>
-                        </div> */}
+                        <DashboardUser email={session.user.email?.toString()} username={session.user.username} id={session.user.id}/>
                     </div>
                     <div className='flex flex-col sm:flex-row mt-10 sm:justify-between'>
                         <h1 className='text-white tracking-wider font-medium text-3xl '>Your articles</h1>
@@ -37,18 +58,11 @@ const page = async () => {
                     </div>
                     
                     <div className="mt-10 grid grid-flow-row grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 2xl:gap-14" style={{maxWidth: 1600}}>
-                        <ArticleBlock title='First blog post' commentsCount={11} likesCount={21} banner={'red'} slug={'/first-blog-post'} type='admin'
-                        shortDesc='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et aliqua...' 
-                        category='Quick News' categoryColor={'red'} createdAt={new Date()} user={{name: 'Ksawery', image: ''}}/>
-                        <ArticleBlock title='Second blog post' commentsCount={10} likesCount={14} banner={'red'} slug={'/second-blog-post'} type='admin'
-                        shortDesc='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et aliqua...' 
-                        category='Quick News' categoryColor={'red'} createdAt={new Date()} user={{name: 'Ksawery', image: ''}}/>
-                        <ArticleBlock title='Third blog post' commentsCount={2} likesCount={5} banner={'red'} slug={'/third-blog-post'} type='admin'
-                        shortDesc='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et aliqua...' 
-                        category='Quick News' categoryColor={'red'} createdAt={new Date()} user={{name: 'Ksawery', image: ''}}/>
-                        <ArticleBlock title='Fourth blog post' commentsCount={11} likesCount={21} banner={'red'} slug={'/fourth-blog-post'} type='admin'
-                        shortDesc='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et aliqua...' 
-                        category='Quick News' categoryColor={'red'} createdAt={new Date()} user={{name: 'Ksawery', image: ''}}/>
+                        {articles.map((item, key) => (
+                            <ArticleBlock key={key} title={item.title} commentsCount={item.Comment.length} likesCount={item.likes} slug={item.slug} type='normal'
+                            shortDesc={item.shortDesc} category={item.category.name} categoryColor={item.category.color} createdAt={item.createdAt} 
+                            user={{name: item.user.username, image: ''}}/>
+                        ))}
                     </div>
                 </div>
             </div>

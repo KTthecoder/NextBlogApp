@@ -13,20 +13,20 @@ const RegisterForm = () => {
     const res = await fetch('http://localhost:3000/api/user', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            email: formData.get('email'), 
-            username: formData.get('username'),
-            password: formData.get('password')
+          email: formData.get('email'), 
+          username: formData.get('username'),
+          password: formData.get('password')
         })
     })
   
     if(res.ok){
-        router.refresh()
-        router.push('/sign-in')
+      router.refresh()
+      router.push('/sign-in')
     } else {
-        alert('error occured')
+      alert('error occured')
     }
   }
 

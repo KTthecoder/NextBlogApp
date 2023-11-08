@@ -40,8 +40,6 @@ const page = async () => {
         }
     }, orderBy: {createdAt: "desc"}})
 
-    console.log(articles)
-
     if(session?.user){
         return (
             <div className="flex w-full flex-col items-center justify-center mt-16 sm:-mt-4 lg:-mt-6">

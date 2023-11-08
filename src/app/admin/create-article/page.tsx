@@ -1,43 +1,12 @@
-'use client'
-import Link from "next/link"
-import { signIn } from "next-auth/react"
-import { useRouter } from 'next/navigation';
-import { FormEvent } from "react";
+import CreateArticleForm from "@/components/CreateArticleForm";
 
-type Props = {}
-
-const page = (props: Props) => {
-    const router = useRouter()
-
-    const handleSubmit = async (e:FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        const formData = new FormData(e.currentTarget)
-        const res = await fetch('http://localhost:3000/api/article', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        })
-    
-        if(res.ok){
-            alert('Article created succesfully')
-        } else {
-            alert('error occured')
-        }
-    }
+const page = () => {
     return (
-        <div>
-            <form onSubmit={handleSubmit} className="flex flex-col mt-7">
-                <label className="text-gray-100 pb-2 tracking-wide font-medium">Email address</label>
-                <input type="text" name="email" placeholder="ksawery@mail.com" className="w-72 sm:w-96 px-4 py-3 text-lg rounded-md mb-4 outline-none"/>
-                <label className="text-gray-100 pb-2 tracking-wide font-medium">Username</label>
-                <input type="text" name="username" placeholder="ksawery7865" className="w-72 sm:w-96 px-4 py-3 text-lg rounded-md mb-4 outline-none"/>
-                <label className="text-gray-100 pb-2 tracking-wide font-medium">Password</label>
-                <input type="password" name="password" placeholder="password" className="w-72 sm:w-96 px-4 py-3 text-lg rounded-md mb-4 outline-none"/>
-                <label className="text-gray-100 pb-2 tracking-wide font-medium">Repeat Password</label>
-                <input type="password" name="repeatPassword" placeholder="repeat password" className="w-72 sm:w-96 px-4 py-3 text-lg rounded-md outline-none"/>
-                <button type="submit" className="bg-blue-500 w-72 sm:w-96 py-3 text-lg text-white mt-8 rounded-md tracking-wide">Create account</button>
-            </form>
+        <div className="flex w-full flex-col items-center justify-center">
+            <div className="flex flex-col items-center justify-center mt-12 sm:mt-2 md:mt-2 lg:-mt-6 w-11/12">
+                <h2 className="text-white text-2xl tracking-wider border-b-[rgb(45,45,45)] border-b-2 w-11/12 mb-7 text-center pb-4 sm:w-96">Create Article</h2>
+                <CreateArticleForm/>
+            </div>
         </div>
     )
 }

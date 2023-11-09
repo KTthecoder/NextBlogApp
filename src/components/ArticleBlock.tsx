@@ -54,7 +54,7 @@ const ArticleBlock = async ({ title, commentsCount, likesCount, shortDesc, categ
             </Link>
             {type === 'admin'
             ? <div className='mt-6 flex items-center justify-start'>
-                <MainButton link={'/admin/edit-article'} title='Edit' color='blue'/>
+                <MainButton link={`/admin/edit-article/${slug}`} title='Edit' color='blue'/>
                 <span className='mr-5'></span>
                 <BtnAction title='Delete' articleSlug={slug.toString()}/>
             </div>

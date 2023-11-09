@@ -2,9 +2,6 @@ import { authOptions } from "@/lib/auth";
 import prisma from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
-import { headers } from 'next/headers'
-import { decode } from 'next-auth/jwt';
-import { getToken } from "next-auth/jwt";
 
 type ArticleType = {
     title: string,
@@ -18,7 +15,7 @@ type CategoryData = {
 }
 
 export async function POST(req:Request){
-    // try{
+    try{
         const session = await getServerSession(authOptions)
         const { articleData, categoryData } = await req.json()
         const article:ArticleType = articleData
@@ -46,21 +43,10 @@ export async function POST(req:Request){
         }})
 
         return NextResponse.json({message: 'Article created successfully'}, {status: 201})
-    // }
-    // catch (error){
-    //     return NextResponse.json({message: 'Error while making API request'}, {status: 500})
-    // }
-
-    // Create post default data with session token user
-    // const session = await getServerSession(authOptions)
-    // console.log(session?.user.id)
-    // await prisma.article.create({data: {
-    //     title: 'Article 2', shortDesc: 'Short description of article 2',
-    //     body: 'Body of article 2', slug: 'article-2', 
-    //     category: {connect: {slug: 'technology'}},
-    //     user: {connect: {id: session?.user.id}}
-    // }})
-    // return NextResponse.json({message: session}, {status: 201})
+    }
+    catch (error){
+        return NextResponse.json({message: 'Error while making API request'}, {status: 500})
+    }
 }
 
 export async function DELETE(req:Request){
